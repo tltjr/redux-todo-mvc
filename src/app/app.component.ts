@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  newTodoText: string = '';
+  todos: string[] = [];
+
+  addTodo(): void {
+    if (this.newTodoText.trim().length) {
+      this.todos.push(this.newTodoText);
+      this.newTodoText = '';
+    }
+  }
 }

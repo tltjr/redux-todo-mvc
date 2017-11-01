@@ -20,7 +20,6 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "",
         "../node_modules/todomvc-app-css/index.css"
       ],
       "scripts": [],

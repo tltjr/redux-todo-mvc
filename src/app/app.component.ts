@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Todo } from './todo';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   newTodoText: string = '';
-  todos: string[] = [];
+  todos: Todo[] = [];
 
   addTodo(): void {
     if (this.newTodoText.trim().length) {
-      this.todos.push(this.newTodoText);
+      var todo = new Todo(this.newTodoText);
+      this.todos.push(todo);
       this.newTodoText = '';
     }
   }

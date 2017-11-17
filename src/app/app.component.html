@@ -9,10 +9,11 @@
 			<ul class="todo-list">
 				<li *ngFor="let todo of todos" [class.completed]="todo.isCompleted" [class.editing]="todo.isBeingEdited">
 					<div class="view">
-						<input class="toggle" type="checkbox">
-						<label>Sample Todo</label>
-						<button class="destroy"></button>
+						<input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.isCompleted">
+            <label (dblclick)="editTodo(todo)">{{todo.title}}</label>
+						<button class="destroy" (click)="removeTodo(todo)"></button>
 					</div>
+          <input class="edit" *ngIf="todo.isBeingEdited" [value]="todo.title" #editedtodo (blur)="stopEdit(todo, editedtodo.value)" (keyup.enter)="updateTodo(todo, editedtodo.value)" (keyup.escape)="cancelEditTodo(todo)">
 				</li>
 			</ul>
 		</section>

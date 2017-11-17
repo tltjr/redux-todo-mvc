@@ -17,4 +17,36 @@ export class AppComponent {
       this.newTodoText = '';
     }
   }
+
+  removeTodo(todo: Todo): void {
+    this.todos.splice(this.todos.indexOf(todo), 1);
+  }
+
+	stopEdit(todo: Todo, editedTitle: string): void {
+		todo.title = editedTitle;
+		todo.isBeingEdited = false;
+	}
+
+	cancelEditTodo(todo: Todo): void {
+		todo.isBeingEdited = false;
+	}
+
+	updateTodo(todo: Todo, editedTitle: string): void {
+		editedTitle = editedTitle.trim();
+		todo.isBeingEdited = false;
+
+		if (editedTitle.length === 0) {
+      this.removeTodo(todo);
+			return;
+		}
+		todo.title = editedTitle;
+	}
+
+	editTodo(todo: Todo) {
+		todo.isBeingEdited = true;
+	}
+
+  toggleCompletion(todo: Todo): void {
+    todo.isCompleted = !todo.isCompleted;
+  }
 }

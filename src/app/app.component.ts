@@ -22,11 +22,6 @@ export class AppComponent {
     this.todos.splice(this.todos.indexOf(todo), 1);
   }
 
-	stopEdit(todo: Todo, editedTitle: string): void {
-		todo.title = editedTitle;
-		todo.isBeingEdited = false;
-	}
-
 	cancelEditTodo(todo: Todo): void {
 		todo.isBeingEdited = false;
 	}

@@ -44,4 +44,12 @@ export class AppComponent {
   toggleCompletion(todo: Todo): void {
     todo.isCompleted = !todo.isCompleted;
   }
+
+  getActiveTodos(): Todo[] {
+    return this.todos.filter(todo => !todo.isCompleted);
+  }
+
+  clearCompleted(): void {
+    this.todos = this.getActiveTodos();
+  }
 }

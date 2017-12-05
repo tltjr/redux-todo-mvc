@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Todo } from './todo';
 
 @Component({
@@ -6,9 +7,12 @@ import { Todo } from './todo';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   newTodoText: string = '';
   todos: Todo[] = [];
+
+  constructor(private readonly http: HttpClient) {
+  }
 
   addTodo(): void {
     if (this.newTodoText.trim().length) {
@@ -52,4 +56,12 @@ export class AppComponent {
   clearCompleted(): void {
     this.todos = this.getActiveTodos();
   }
+
+  ngOnInit(): void {
+    this.http.get<Todo[]>('http://localhost:55855/api/todos')
+      .subscribe(todos => {
+        this.todos = todos;
+      });
+  }
 }
+

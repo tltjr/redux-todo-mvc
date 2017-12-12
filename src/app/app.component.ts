@@ -57,6 +57,13 @@ export class AppComponent implements OnInit {
     this.todos = this.getActiveTodos();
   }
 
+  save(): void {
+    this.http.post<Todo[]>('http://localhost:55855/api/todos/save', this.todos)
+      .subscribe(todos => {
+        this.todos = todos;
+      });
+  }
+
   ngOnInit(): void {
     this.http.get<Todo[]>('http://localhost:55855/api/todos')
       .subscribe(todos => {

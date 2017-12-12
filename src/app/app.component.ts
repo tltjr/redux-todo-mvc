@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Todo } from './todo';
+import { NotificationsService } from 'angular4-notifications';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit {
   newTodoText: string = '';
   todos: Todo[] = [];
 
-  constructor(private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient, private notificationsService: NotificationsService) {
   }
 
   addTodo(): void {
@@ -61,6 +62,10 @@ export class AppComponent implements OnInit {
     this.http.post<Todo[]>('http://localhost:55855/api/todos/save', this.todos)
       .subscribe(todos => {
         this.todos = todos;
+        this.notificationsService.success('Success!', 'Todos Saved Successfully', {
+          timeOut: 2000,
+          showProgressBar: false
+        });
       });
   }
 

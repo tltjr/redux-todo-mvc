@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
     this.http.post<Todo[]>('http://localhost:55855/api/todos/save', this.todos)
       .subscribe(todos => {
         this.todos = todos;
-        this.notificationsService.success('Success!', 'Todos Saved Successfully', {
+        this.notificationsService.success('Success!', 'Todos saved', { 
           timeOut: 2000,
           showProgressBar: false
         });

@@ -12,3 +12,7 @@
     text-decoration: underline;
 }
 
+li > a.active {
+  font-weight: bold;
+}
+

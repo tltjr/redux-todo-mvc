@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Todo } from '../todo';
 
 @Component({
   selector: 'app-completed',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./completed.component.css']
 })
 export class CompletedComponent implements OnInit {
+  todos: Todo[] = [];
 
-  constructor() { }
+  constructor(private readonly http: HttpClient) { }
 
   ngOnInit() {
+    this.http.get<Todo[]>('http://localhost:55855/api/todos/completed')
+      .subscribe(todos => {
+        this.todos = todos;
+      });
   }
-
 }

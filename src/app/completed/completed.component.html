@@ -1,3 +1,16 @@
-<p>
-  completed works!
-</p>
+<div class="wrapper">
+	<section class="todoapp">
+		<header>
+			<h1>completed</h1>
+		</header>
+		<section class="main">
+			<ul class="todo-list">
+				<li *ngFor="let todo of todos">
+					<div class="view">
+            <label>{{todo.title}}</label>
+					</div>
+				</li>
+			</ul>
+		</section>
+	</section>
+</div>

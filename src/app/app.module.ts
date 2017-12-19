@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { CompletedComponent } from './completed/completed.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'completed', component: CompletedComponent }
 ];
 

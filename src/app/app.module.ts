@@ -11,8 +11,10 @@ import { HomeComponent } from './home/home.component';
 import { CompletedComponent } from './completed/completed.component';
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'completed', component: CompletedComponent }
+  { path: 'completed', component: CompletedComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

@@ -13,7 +13,7 @@
             <label (dblclick)="editTodo(todo)">{{todo.title}}</label>
 						<button class="destroy" (click)="removeTodo(todo)"></button>
 					</div>
-          <input class="edit" *ngIf="todo.isBeingEdited" [value]="todo.title" #editedtodo (keyup.enter)="updateTodo(todo, editedtodo.value)" (keyup.escape)="cancelEditTodo(todo)">
+          <app-edit *ngIf="todo.isBeingEdited" [todo]="todo" (update)="checkForDeletion($event)" (cancel)="cancelEditTodo($event)"></app-edit>
 				</li>
 			</ul>
 		</section>

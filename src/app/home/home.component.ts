@@ -29,18 +29,14 @@ export class HomeComponent implements OnInit {
   }
 
 	cancelEditTodo(todo: Todo): void {
-		todo.isBeingEdited = false;
+    todo.isBeingEdited = false;
 	}
 
-	updateTodo(todo: Todo, editedTitle: string): void {
-		editedTitle = editedTitle.trim();
-		todo.isBeingEdited = false;
-
-		if (editedTitle.length === 0) {
+	checkForDeletion(todo: Todo): void {
+		if (todo.title.length === 0) {
       this.removeTodo(todo);
 			return;
 		}
-		todo.title = editedTitle;
 	}
 
 	editTodo(todo: Todo) {

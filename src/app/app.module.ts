@@ -9,6 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CompletedComponent } from './completed/completed.component';
+import { EditComponent } from './edit/edit.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,7 +22,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    CompletedComponent
+    CompletedComponent,
+    EditComponent
   ],
   imports: [
     RouterModule.forRoot(

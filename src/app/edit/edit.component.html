@@ -1,0 +1,1 @@
+<input class="edit" [value]="todo.title" #editedtodo (keyup.enter)="updateTodo(todo, editedtodo.value)" (keyup.escape)="cancelEditTodo(todo)">

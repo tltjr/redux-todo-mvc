@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Todo } from '../todo';
 import { NotificationsService } from 'angular4-notifications';
+import * as Redux from 'redux';
+import { AppStore } from '../app-store';
 
 @Component({
   selector: 'app-home',
@@ -13,13 +15,30 @@ export class HomeComponent implements OnInit {
   newTodoText: string = '';
   todos: Todo[] = [];
 
-  constructor(private readonly http: HttpClient, private notificationsService: NotificationsService) {
+  constructor(private readonly http: HttpClient, private notificationsService: NotificationsService, @Inject(AppStore) private store: Redux.Store<any>) {
+    store.subscribe(() => this.updateState());
+    this.updateState();
+  }
+
+  updateState() {
+    const appState = this.store.getState();
+    if (typeof appState == 'undefined' || appState == null) {
+      return;
+    }
+    this.todos = appState.todos;
   }
 
   addTodo(): void {
     if (this.newTodoText.trim().length) {
-      var todo = new Todo(this.newTodoText);
-      this.todos.push(todo);
+      this.store.dispatch({
+        type: 'ADD_TODO',
+        payload:
+        {
+          newTodo: this.newTodoText
+        }
+      });
+      //var todo = new Todo(this.newTodoText);
+      //this.todos.push(todo);
       this.newTodoText = '';
     }
   }

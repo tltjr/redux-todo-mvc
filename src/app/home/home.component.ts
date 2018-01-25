@@ -10,7 +10,8 @@ import {
   removeTodo,
   clearCompleted,
   startEdit,
-  todosRetrieved
+  todosRetrieved,
+  toggleCompletion
 } from '../actions';
 
 @Component({
@@ -51,8 +52,8 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(startEdit(index));
 	}
 
-  toggleCompletion(todo: Todo): void {
-    todo.isCompleted = !todo.isCompleted;
+  toggleCompletion(index: number): void {
+    this.store.dispatch(toggleCompletion(index));
   }
 
   getActiveTodos(): Todo[] {

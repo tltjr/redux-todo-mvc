@@ -9,7 +9,7 @@
 			<ul class="todo-list">
 				<li *ngFor="let todo of todos; index as i" [class.completed]="todo.isCompleted" [class.editing]="todo.isBeingEdited">
 					<div class="view">
-						<input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.isCompleted">
+						<input class="toggle" type="checkbox" (click)="toggleCompletion(i)" [checked]="todo.isCompleted">
             <label (dblclick)="editTodo(i)">{{todo.title}}</label>
 						<button class="destroy" (click)="removeTodo(todo)"></button>
 					</div>

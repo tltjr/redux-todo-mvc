@@ -8,6 +8,7 @@ export const START_EDIT = 'START_EDIT'
 export const TODOS_RETRIEVED = 'TODOS_RETRIEVED'
 export const CANCEL_EDIT = 'CANCEL_EDIT'
 export const UPDATE_TODO = 'UPDATE_TODO'
+export const TOGGLE_COMPLETION = 'TOGGLE_COMPLETION'
 
 export const addTodo = (text: string): IAppAction => {
   return {
@@ -64,6 +65,15 @@ export const updateTodo = (index: number, editedTitle: string): IAppAction => {
     payload: {
       index: index,
       title: editedTitle
+    }
+  }
+}
+
+export const toggleCompletion = (index: number): IAppAction => {
+  return { 
+    type: TOGGLE_COMPLETION,
+    payload: {
+      index: index
     }
   }
 }

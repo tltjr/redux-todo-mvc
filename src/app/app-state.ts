@@ -7,7 +7,8 @@ import {
   CANCEL_EDIT,
   UPDATE_TODO,
   TODOS_RETRIEVED,
-  CLEAR_COMPLETED
+  CLEAR_COMPLETED,
+  TOGGLE_COMPLETION
 } from './actions'; 
 
 export interface AppState {
@@ -79,6 +80,14 @@ export const reducer =
         return Object.assign({}, state, { todos: action.payload.todos });
       case CLEAR_COMPLETED:
         return Object.assign({}, state, { todos: state.todos.filter(todo => !todo.isCompleted) });;
+      case TOGGLE_COMPLETION:
+        var updatedTodos = state.todos.map((item, index) => {
+          if (index !== action.payload.index) {
+            return item;
+          }
+          return Object.assign({}, item, { isCompleted: !item.isCompleted });
+        });
+        return Object.assign({}, state, { todos: updatedTodos });
       default:
         return state;
       }

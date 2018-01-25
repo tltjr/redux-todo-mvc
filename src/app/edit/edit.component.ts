@@ -3,6 +3,7 @@ import { Todo } from '../todo';
 import * as Redux from 'redux';
 import { AppStore } from '../app-store';
 import { AppState } from '../app-state';
+import { cancelEdit, updateTodo } from '../actions';
 
 @Component({
   selector: 'app-edit',
@@ -18,22 +19,11 @@ export class EditComponent {
   }
 
 	cancelEditTodo(index: number): void {
-    this.store.dispatch({
-      type: 'CANCEL_EDIT',
-      payload: {
-        index: index
-      }
-    });
+    this.store.dispatch(cancelEdit(index));
 	}
 
 	updateTodo(index: number, editedTitle: string): void {
-    this.store.dispatch({
-      type: 'UPDATE_TODO',
-      payload: {
-        index: index,
-        title: editedTitle
-      }
-    });
+    this.store.dispatch(updateTodo(index, editedTitle));
 	}
 }
 

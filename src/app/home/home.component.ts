@@ -5,6 +5,13 @@ import { NotificationsService } from 'angular4-notifications';
 import * as Redux from 'redux';
 import { AppStore } from '../app-store';
 import { AppState } from '../app-state';
+import { 
+  addTodo,
+  removeTodo,
+  clearCompleted,
+  startEdit,
+  todosRetrieved
+} from '../actions';
 
 @Component({
   selector: 'app-home',
@@ -32,47 +39,16 @@ export class HomeComponent implements OnInit {
 
   addTodo(): void {
     if (this.newTodoText.trim().length) {
-      this.store.dispatch({
-        type: 'ADD_TODO',
-        payload:
-        {
-          newTodo: this.newTodoText
-        }
-      });
+      this.store.dispatch(addTodo(this.newTodoText.trim()));
     }
   }
 
   removeTodo(todo: Todo): void {
-    this.store.dispatch({
-      type: 'REMOVE_TODO',
-      payload: {
-        todo: todo
-      }
-    });
+    this.store.dispatch(removeTodo(todo));
   }
 
-	cancelEditTodo(todo: Todo): void {
-    todo.isBeingEdited = false;
-	}
-
-	checkForDeletion(todo: Todo): void {
-		if (todo.title.length === 0) {
-      this.store.dispatch({
-        type: 'REMOVE_TODO',
-        payload: {
-          todo: todo
-        }
-      });
-		}
-	}
-
 	editTodo(index: number) {
-    this.store.dispatch({
-      type: 'START_EDIT',
-      payload: {
-        index: index
-      }
-    });
+    this.store.dispatch(startEdit(index));
 	}
 
   toggleCompletion(todo: Todo): void {
@@ -84,9 +60,7 @@ export class HomeComponent implements OnInit {
   }
 
   clearCompleted(): void {
-    this.store.dispatch({
-      type: 'CLEAR_COMPLETED'
-    });
+    this.store.dispatch(clearCompleted());
   }
 
   save(): void {
@@ -102,12 +76,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<Todo[]>('http://localhost:55855/api/todos')
       .subscribe(todos => {
-        this.store.dispatch({
-          type: 'TODOS_RETRIEVED',
-          payload: {
-            todos: todos
-          }
-        });
+        this.store.dispatch(todosRetrieved(todos));
       });
   }
 }

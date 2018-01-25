@@ -7,10 +7,10 @@
 		</header>
 		<section class="main">
 			<ul class="todo-list">
-				<li *ngFor="let todo of todos" [class.completed]="todo.isCompleted" [class.editing]="todo.isBeingEdited">
+				<li *ngFor="let todo of todos; index as i" [class.completed]="todo.isCompleted" [class.editing]="todo.isBeingEdited">
 					<div class="view">
 						<input class="toggle" type="checkbox" (click)="toggleCompletion(todo)" [checked]="todo.isCompleted">
-            <label (dblclick)="editTodo(todo)">{{todo.title}}</label>
+            <label (dblclick)="editTodo(i)">{{todo.title}}</label>
 						<button class="destroy" (click)="removeTodo(todo)"></button>
 					</div>
           <app-edit *ngIf="todo.isBeingEdited" [todo]="todo" (update)="checkForDeletion($event)" (cancel)="cancelEditTodo($event)"></app-edit>

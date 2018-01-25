@@ -4,6 +4,7 @@ import { Todo } from '../todo';
 import { NotificationsService } from 'angular4-notifications';
 import * as Redux from 'redux';
 import { AppStore } from '../app-store';
+import { AppState } from '../app-state';
 
 @Component({
   selector: 'app-home',
@@ -15,17 +16,18 @@ export class HomeComponent implements OnInit {
   newTodoText: string = '';
   todos: Todo[] = [];
 
-  constructor(private readonly http: HttpClient, private notificationsService: NotificationsService, @Inject(AppStore) private store: Redux.Store<any>) {
+  constructor(private readonly http: HttpClient, private notificationsService: NotificationsService, @Inject(AppStore) private store: Redux.Store<AppState>) {
     store.subscribe(() => this.updateState());
     this.updateState();
   }
 
   updateState() {
-    const appState = this.store.getState();
+    const appState: AppState = this.store.getState();
     if (typeof appState == 'undefined' || appState == null) {
       return;
     }
     this.todos = appState.todos;
+    this.newTodoText = appState.newTodoText;
   }
 
   addTodo(): void {
@@ -37,14 +39,16 @@ export class HomeComponent implements OnInit {
           newTodo: this.newTodoText
         }
       });
-      //var todo = new Todo(this.newTodoText);
-      //this.todos.push(todo);
-      this.newTodoText = '';
     }
   }
 
   removeTodo(todo: Todo): void {
-    this.todos.splice(this.todos.indexOf(todo), 1);
+    this.store.dispatch({
+      type: 'REMOVE_TODO',
+      payload: {
+        todo: todo
+      }
+    });
   }
 
 	cancelEditTodo(todo: Todo): void {
@@ -53,13 +57,22 @@ export class HomeComponent implements OnInit {
 
 	checkForDeletion(todo: Todo): void {
 		if (todo.title.length === 0) {
-      this.removeTodo(todo);
-			return;
+      this.store.dispatch({
+        type: 'REMOVE_TODO',
+        payload: {
+          todo: todo
+        }
+      });
 		}
 	}
 
-	editTodo(todo: Todo) {
-		todo.isBeingEdited = true;
+	editTodo(index: number) {
+    this.store.dispatch({
+      type: 'START_EDIT',
+      payload: {
+        index: index
+      }
+    });
 	}
 
   toggleCompletion(todo: Todo): void {
@@ -71,13 +84,14 @@ export class HomeComponent implements OnInit {
   }
 
   clearCompleted(): void {
-    this.todos = this.getActiveTodos();
+    this.store.dispatch({
+      type: 'CLEAR_COMPLETED'
+    });
   }
 
   save(): void {
     this.http.post<Todo[]>('http://localhost:55855/api/todos/save', this.todos)
       .subscribe(todos => {
-        this.todos = todos;
         this.notificationsService.success('Success!', 'Todos saved', { 
           timeOut: 2000,
           showProgressBar: false
@@ -88,7 +102,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<Todo[]>('http://localhost:55855/api/todos')
       .subscribe(todos => {
-        this.todos = todos;
+        this.store.dispatch({
+          type: 'TODOS_RETRIEVED',
+          payload: {
+            todos: todos
+          }
+        });
       });
   }
 }

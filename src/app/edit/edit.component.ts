@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Inject } from '@angular/core';
 import { Todo } from '../todo';
+import * as Redux from 'redux';
+import { AppStore } from '../app-store';
+import { AppState } from '../app-state';
 
 @Component({
   selector: 'app-edit',
@@ -11,26 +14,26 @@ export class EditComponent {
   @Input()
   todo: Todo;
 
-  @Output()
-  update: EventEmitter<Todo>;
-  @Output()
-  cancel: EventEmitter<Todo>;
-
-  constructor() {
-    this.update = new EventEmitter<Todo>();
-    this.cancel = new EventEmitter<Todo>();
+  constructor(@Inject(AppStore) private store: Redux.Store<AppState>) {
   }
 
-	cancelEditTodo(todo: Todo): void {
-    this.cancel.emit(todo);
+	cancelEditTodo(index: number): void {
+    this.store.dispatch({
+      type: 'CANCEL_EDIT',
+      payload: {
+        index: index
+      }
+    });
 	}
 
-	updateTodo(todo: Todo, editedTitle: string): void {
-    this.cancel.emit(todo);
-    todo.title = editedTitle.trim();
-    // if the title has been deleted, we want to remove this todo from the
-    // parent collection
-    this.update.emit(todo);
+	updateTodo(index: number, editedTitle: string): void {
+    this.store.dispatch({
+      type: 'UPDATE_TODO',
+      payload: {
+        index: index,
+        title: editedTitle
+      }
+    });
 	}
 }
 

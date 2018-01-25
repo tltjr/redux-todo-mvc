@@ -38,22 +38,28 @@ export const reducer =
         }
         let newTodo = new Todo(action.payload.newTodo);
         newTodo.id = ++maxId;
-        return Object.assign(state, { todos: [...state.todos, newTodo] });
+        return Object.assign({}, state, { todos: [...state.todos, newTodo] });
       case REMOVE_TODO:
-        return Object.assign(state, { todos: state.todos.filter(t => t !== action.payload.todo) });
+        return Object.assign({}, state, { todos: state.todos.filter(t => t !== action.payload.todo) });
       case START_EDIT:
-        var newState = {...state};
-        const index = action.payload.index;
-        newState.todos[index].isBeingEdited = true;
-        newState.todos[index].index = index;
-        return newState;
+        var updatedTodos = state.todos.map((item, index) => {
+          if (index !== action.payload.index) {
+            return item;
+          }
+          return Object.assign({}, item, { isBeingEdited: true, index: action.payload.index });
+        });
+        return Object.assign({}, state, { todos: updatedTodos });
       case CANCEL_EDIT:
-        var newState = {...state};
-        newState.todos[action.payload.index].isBeingEdited = false;
-        return newState;
+        var updatedTodos = state.todos.map((item, index) => {
+          if (index !== action.payload.index) {
+            return item;
+          }
+          return Object.assign({}, item, { isBeingEdited: false });
+        });
+        return Object.assign({}, state, { todos: updatedTodos });
       case UPDATE_TODO:
         if (action.payload.title.length === 0) {
-          return Object.assign(state, {
+          return Object.assign({}, state, {
             todos: [
               ...state.todos.slice(0, action.payload.index),
               ...state.todos.slice(action.payload.index + 1)
@@ -61,15 +67,18 @@ export const reducer =
           });
         } 
         else {
-          var newState = {...state};
-          newState.todos[action.payload.index].title = action.payload.title;
-          newState.todos[action.payload.index].isBeingEdited = false;
-          return newState;
+          var updatedTodos = state.todos.map((item, index) => {
+            if (index !== action.payload.index) {
+              return item;
+            }
+            return Object.assign({}, item, { title: action.payload.title, isBeingEdited: false });
+          });
+          return Object.assign({}, state, { todos: updatedTodos });
         }
       case TODOS_RETRIEVED:
-        return Object.assign(state, { todos: action.payload.todos });
+        return Object.assign({}, state, { todos: action.payload.todos });
       case CLEAR_COMPLETED:
-        return Object.assign(state, { todos: state.todos.filter(todo => !todo.isCompleted) });;
+        return Object.assign({}, state, { todos: state.todos.filter(todo => !todo.isCompleted) });;
       default:
         return state;
       }

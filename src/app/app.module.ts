@@ -14,10 +14,11 @@ import { EditComponent } from './edit/edit.component';
 import { createStore } from 'redux';
 import { AppStore } from './app-store';
 import { default as reducer } from './app-state';
+import freezeState from 'redux-freeze-state';
 
 export function storeFactory() {
     const enhancer = window['devToolsExtension'] ? window['devToolsExtension']()(createStore) : createStore;
-    const store = enhancer(reducer);
+    const store = enhancer(freezeState(reducer));
     return store;
 }
 

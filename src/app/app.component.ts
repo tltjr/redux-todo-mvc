@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { Todo } from './todo';
-import { NotificationsService } from 'angular4-notifications';
 import * as Redux from 'redux';
 import { AppStore } from './app-store';
 import { AppState } from './app-state';
@@ -25,7 +24,7 @@ export class AppComponent {
   newTodoText: string = '';
   todos: Todo[] = [];
 
-  constructor(private notificationsService: NotificationsService, @Inject(AppStore) private store: Redux.Store<AppState>) {
+  constructor(@Inject(AppStore) private store: Redux.Store<AppState>) {
     store.subscribe(() => this.updateState());
     this.updateState();
   }

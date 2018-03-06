@@ -37,9 +37,9 @@ export const reducer =
         }
         let newTodo = new Todo(action.payload.newTodo);
         newTodo.id = ++maxId;
-        return Object.assign({}, state, { todos: [...state.todos, newTodo] });
+        return { ...state, todos: [...state.todos, newTodo] };
       case REMOVE_TODO:
-        return Object.assign({}, state, { todos: state.todos.filter(t => t !== action.payload.todo) });
+        return { ...state, todos: state.todos.filter(t => t !== action.payload.todo) };
       case START_EDIT:
         var updatedTodos = state.todos.map((item, index) => {
           if (index !== action.payload.index) {
@@ -47,23 +47,22 @@ export const reducer =
           }
           return Object.assign({}, item, { isBeingEdited: true, index: action.payload.index });
         });
-        return Object.assign({}, state, { todos: updatedTodos });
+        return { ...state, todos: updatedTodos };
       case CANCEL_EDIT:
         var updatedTodos = state.todos.map((item, index) => {
           if (index !== action.payload.index) {
             return item;
           }
-          return Object.assign({}, item, { isBeingEdited: false });
+          return { ...item, isBeingEdited: false };
         });
-        return Object.assign({}, state, { todos: updatedTodos });
+        return { ...state, todos: updatedTodos };
       case UPDATE_TODO:
         if (action.payload.title.length === 0) {
-          return Object.assign({}, state, {
-            todos: [
+          return { ...state, todos: [
               ...state.todos.slice(0, action.payload.index),
               ...state.todos.slice(action.payload.index + 1)
             ]
-          });
+          };
         } 
         else {
           var updatedTodos = state.todos.map((item, index) => {
@@ -72,18 +71,18 @@ export const reducer =
             }
             return Object.assign({}, item, { title: action.payload.title, isBeingEdited: false });
           });
-          return Object.assign({}, state, { todos: updatedTodos });
+          return { ...state, todos: updatedTodos };
         }
       case CLEAR_COMPLETED:
-        return Object.assign({}, state, { todos: state.todos.filter(todo => !todo.isCompleted) });;
+        return { ...state, todos: state.todos.filter(todo => !todo.isCompleted) };
       case TOGGLE_COMPLETION:
         var updatedTodos = state.todos.map((item, index) => {
           if (index !== action.payload.index) {
             return item;
           }
-          return Object.assign({}, item, { isCompleted: !item.isCompleted });
+          return { ...item, isCompleted: !item.isCompleted };
         });
-        return Object.assign({}, state, { todos: updatedTodos });
+        return { ...state, todos: updatedTodos };
       default:
         return state;
       }

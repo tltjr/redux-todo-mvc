@@ -1,9 +1,10 @@
-first downgrade
+(check) first downgrade
+(check) action creators - branch created
 
-deep freeze
-immutable
+ngrx/store
 middleware
-action creators - branch created
+immutable
+
 slide deck general
 slide deck common redux patterns for preventing state mutation
 

@@ -6,7 +6,6 @@ import {
   START_EDIT,
   CANCEL_EDIT,
   UPDATE_TODO,
-  TODOS_RETRIEVED,
   CLEAR_COMPLETED,
   TOGGLE_COMPLETION
 } from './actions'; 
@@ -30,7 +29,6 @@ export const reducer =
   (state: AppState = initialState, action: IAppAction): AppState => {
     switch (action.type) {
       case ADD_TODO:
-        // temp id
         let maxId = 0;
         for (let todo of state.todos) {
           if (todo.id > maxId) {
@@ -76,8 +74,6 @@ export const reducer =
           });
           return Object.assign({}, state, { todos: updatedTodos });
         }
-      case TODOS_RETRIEVED:
-        return Object.assign({}, state, { todos: action.payload.todos });
       case CLEAR_COMPLETED:
         return Object.assign({}, state, { todos: state.todos.filter(todo => !todo.isCompleted) });;
       case TOGGLE_COMPLETION:

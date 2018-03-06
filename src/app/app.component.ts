@@ -10,7 +10,6 @@ import {
   clearCompleted,
   startEdit,
   cancelEdit,
-  todosRetrieved,
   toggleCompletion
 } from './actions';
 

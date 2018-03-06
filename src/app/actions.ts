@@ -5,7 +5,6 @@ export const ADD_TODO = 'ADD_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const CLEAR_COMPLETED = 'CLEAR_COMPLETED'
 export const START_EDIT = 'START_EDIT'
-export const TODOS_RETRIEVED = 'TODOS_RETRIEVED'
 export const CANCEL_EDIT = 'CANCEL_EDIT'
 export const UPDATE_TODO = 'UPDATE_TODO'
 export const TOGGLE_COMPLETION = 'TOGGLE_COMPLETION'
@@ -37,15 +36,6 @@ export const startEdit = (index: number): IAppAction => {
     type: START_EDIT,
     payload: {
       index: index
-    }
-  }
-}
-
-export const todosRetrieved = (todos: Todo[]): IAppAction => {
-  return { 
-    type: TODOS_RETRIEVED,
-    payload: {
-      todos: todos
     }
   }
 }

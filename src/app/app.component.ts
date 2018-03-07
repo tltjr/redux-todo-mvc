@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Todo } from './todo';
-import * as Redux from 'redux';
-import { AppStore } from './app-store';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 import { AppState } from './app-state';
 import { 
   addTodo,
@@ -20,26 +20,24 @@ import {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  newTodoText: string = '';
-  todos: Todo[] = [];
+  $newTodoText: string;
+  $todos: Todo[] = [];
+  private subscription;
 
-  constructor(@Inject(AppStore) private store: Redux.Store<AppState>) {
-    store.subscribe(() => this.updateState());
-    this.updateState();
-  }
-
-  updateState() {
-    const appState: AppState = this.store.getState();
-    if (typeof appState == 'undefined' || appState == null) {
-      return;
-    }
-    this.todos = appState.todos;
-    this.newTodoText = appState.newTodoText;
+  constructor(private store: Store<AppState>) {
+    this.subscription = this.store
+        .subscribe((appState: any) => {
+          this.$todos = appState.reducer.todos;
+      });
+    this.subscription = this.store
+        .subscribe((appState: any) => {
+          this.$newTodoText = appState.reducer.newTodoText;
+      });
   }
 
   addTodo(): void {
-    if (this.newTodoText.trim().length) {
-      this.store.dispatch(addTodo(this.newTodoText.trim()));
+    if (this.$newTodoText.trim().length) {
+      this.store.dispatch(addTodo(this.$newTodoText.trim()));
     }
   }
 
@@ -55,8 +53,9 @@ export class AppComponent {
     this.store.dispatch(toggleCompletion(index));
   }
 
-  getActiveTodos(): Todo[] {
-    return this.todos.filter(todo => !todo.isCompleted);
+  getActiveCount(): number {
+    return (typeof this.$todos != 'undefined')
+        ? this.$todos.filter(todo => !todo.isCompleted).length : 0;
   }
 
   clearCompleted(): void {

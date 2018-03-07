@@ -1,5 +1,5 @@
 import { Todo } from './todo';
-import { Action } from 'redux';
+import { Action } from '@ngrx/store';
 import { 
   ADD_TODO,
   REMOVE_TODO,

@@ -2,11 +2,11 @@
 	<section class="todoapp">
 		<header>
 			<h1>todos</h1>
-      <input autofocus="" class="new-todo" placeholder="What needs to be done?" [(ngModel)]="newTodoText" (keyup.enter)="addTodo()">
+      <input autofocus="" class="new-todo" placeholder="What needs to be done?" [(ngModel)]="$newTodoText" (keyup.enter)="addTodo()">
 		</header>
 		<section class="main">
 			<ul class="todo-list">
-				<li *ngFor="let todo of todos; index as i" [class.completed]="todo.isCompleted" [class.editing]="todo.isBeingEdited">
+				<li *ngFor="let todo of $todos; index as i" [class.completed]="todo.isCompleted" [class.editing]="todo.isBeingEdited">
 					<div class="view">
 						<input class="toggle" type="checkbox" (click)="toggleCompletion(i)" [checked]="todo.isCompleted">
             <label (dblclick)="editTodo(i)">{{todo.title}}</label>
@@ -17,8 +17,12 @@
 			</ul>
 		</section>
 		<footer class="footer">
-      <span class="todo-count"><strong>{{getActiveTodos().length}}</strong> {{getActiveTodos().length === 1 ? 'item' : 'items'}} left</span>
-			<button class="clear-completed" (click)="clearCompleted()" *ngIf="getActiveTodos().length < todos.length">Clear completed</button>
+      <span class="todo-count"><strong>{{getActiveCount()}}</strong> {{getActiveCount() === 1 ? 'item' : 'items'}} left</span>
+			<button class="clear-completed" 
+        (click)="clearCompleted()"
+        *ngIf="getActiveCount() < $todos.length">
+        Clear completed
+      </button>
 		</footer>
 	</section>
 </div>

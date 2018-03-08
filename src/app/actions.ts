@@ -13,7 +13,7 @@ export const addTodo = (text: string): IAppAction => {
   return {
     type: ADD_TODO,
     payload: {
-      newTodo: text
+      newTodoText: text
     }
   }
 }

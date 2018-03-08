@@ -35,7 +35,7 @@ export const reducer =
             maxId = todo.id
           }
         }
-        let newTodo = new Todo(action.payload.newTodo);
+        let newTodo = new Todo(action.payload.newTodoText);
         newTodo.id = ++maxId;
         return { ...state, todos: [...state.todos, newTodo] };
       case REMOVE_TODO:

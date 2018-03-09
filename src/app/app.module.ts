@@ -5,18 +5,14 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { createStore, StoreEnhancer, compose, Store, applyMiddleware } from 'redux';
+import { createStore, Store, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { AppStore } from './app-store';
 import { default as reducer, AppState, logger } from './app-state';
 
-const devtools: StoreEnhancer<AppState> =
-  window['devToolsExtension'] ?
-  window['devToolsExtension']() : f => f;
-
 export function createAppStore(): Store<AppState> {
-  return createStore<AppState>(
-    reducer,
-    devtools
+  return createStore<AppState>(reducer, composeWithDevTools(
+    applyMiddleware(logger)
   );
 }
 

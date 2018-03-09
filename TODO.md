@@ -1,7 +1,7 @@
 (check) first downgrade
 (check) action creators - branch created
+(check) ngrx-store
 
-ngrx/store
 middleware
 immutable
 

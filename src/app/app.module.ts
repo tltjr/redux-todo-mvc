@@ -5,14 +5,19 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-import { createStore } from 'redux';
+import { createStore, StoreEnhancer, compose, Store, applyMiddleware } from 'redux';
 import { AppStore } from './app-store';
-import { default as reducer } from './app-state';
+import { default as reducer, AppState, logger } from './app-state';
 
-export function storeFactory() {
-    const enhancer = window['devToolsExtension'] ? window['devToolsExtension']()(createStore) : createStore;
-    const store = enhancer(reducer);
-    return store;
+const devtools: StoreEnhancer<AppState> =
+  window['devToolsExtension'] ?
+  window['devToolsExtension']() : f => f;
+
+export function createAppStore(): Store<AppState> {
+  return createStore<AppState>(
+    reducer,
+    devtools
+  );
 }
 
 @NgModule({
@@ -25,7 +30,7 @@ export function storeFactory() {
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: AppStore, useFactory: storeFactory }
+    { provide: AppStore, useFactory: createAppStore }
   ],
   bootstrap: [AppComponent]
 })

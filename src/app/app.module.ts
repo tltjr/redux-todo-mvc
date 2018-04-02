@@ -13,7 +13,7 @@ import { default as reducer, AppState, logger } from './app-state';
 export function createAppStore(): Store<AppState> {
   return createStore<AppState>(reducer, composeWithDevTools(
     applyMiddleware(logger)
-  );
+  ));
 }
 
 @NgModule({

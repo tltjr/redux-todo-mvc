@@ -20,24 +20,24 @@ import {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  $newTodoText: string;
-  $todos: Todo[] = [];
+  newTodoText: string;
+  todos: Todo[] = [];
   private subscription;
 
   constructor(private store: Store<AppState>) {
     this.subscription = this.store
         .subscribe((appState: any) => {
-          this.$todos = appState.reducer.todos;
+          this.todos = appState.reducer.todos;
       });
     this.subscription = this.store
         .subscribe((appState: any) => {
-          this.$newTodoText = appState.reducer.newTodoText;
+          this.newTodoText = appState.reducer.newTodoText;
       });
   }
 
   addTodo(): void {
-    if (this.$newTodoText.trim().length) {
-      this.store.dispatch(addTodo(this.$newTodoText.trim()));
+    if (this.newTodoText.trim().length) {
+      this.store.dispatch(addTodo(this.newTodoText.trim()));
     }
   }
 
@@ -54,8 +54,8 @@ export class AppComponent {
   }
 
   getActiveCount(): number {
-    return (typeof this.$todos != 'undefined')
-        ? this.$todos.filter(todo => !todo.isCompleted).length : 0;
+    return (typeof this.todos != 'undefined')
+        ? this.todos.filter(todo => !todo.isCompleted).length : 0;
   }
 
   clearCompleted(): void {

@@ -5,12 +5,12 @@
       <input autofocus="" 
              class="new-todo"
              placeholder="What needs to be done?" 
-             [(ngModel)]="$newTodoText"
+             [(ngModel)]="newTodoText"
              (keyup.enter)="addTodo()">
 		</header>
 		<section class="main">
 			<ul class="todo-list">
-				<li *ngFor="let todo of $todos; index as i"
+				<li *ngFor="let todo of todos; index as i"
             [class.completed]="todo.isCompleted"
             [class.editing]="todo.isBeingEdited">
 					<div class="view">
@@ -36,7 +36,7 @@
       </span>
 			<button class="clear-completed" 
         (click)="clearCompleted()"
-        *ngIf="getActiveCount() < $todos.length">
+        *ngIf="getActiveCount() < todos.length">
         Clear completed
       </button>
 		</footer>

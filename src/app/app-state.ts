@@ -28,6 +28,8 @@ export const reducer =
         }
         let newTodo = new Todo(action.payload.newTodo);
         newTodo.id = ++maxId;
+        //state.todos.push(newTodo);
+        //return state;
         return Object.assign({}, state, { todos: [...state.todos, newTodo] });
       case 'REMOVE_TODO':
         return Object.assign({}, state, { todos: state.todos.filter(t => t !== action.payload.todo) });

@@ -32,21 +32,21 @@ export const reducer =
       case 'REMOVE_TODO':
         return Object.assign({}, state, { todos: state.todos.filter(t => t !== action.payload.todo) });
       case 'START_EDIT':
-        var updatedTodos = state.todos.map((item, index) => {
+        var todosStartEdit = state.todos.map((item, index) => {
           if (index !== action.payload.index) {
             return item;
           }
           return Object.assign({}, item, { isBeingEdited: true, index: action.payload.index });
         });
-        return Object.assign({}, state, { todos: updatedTodos });
+        return Object.assign({}, state, { todos: todosStartEdit });
       case 'CANCEL_EDIT':
-        var updatedTodos = state.todos.map((item, index) => {
+        var todosCancelEdit = state.todos.map((item, index) => {
           if (index !== action.payload.index) {
             return item;
           }
           return Object.assign({}, item, { isBeingEdited: false });
         });
-        return Object.assign({}, state, { todos: updatedTodos });
+        return Object.assign({}, state, { todos: todosCancelEdit });
       case 'UPDATE_TODO':
         if (action.payload.title.length === 0) {
           return Object.assign({}, state, {
@@ -68,13 +68,13 @@ export const reducer =
       case 'CLEAR_COMPLETED':
         return Object.assign({}, state, { todos: state.todos.filter(todo => !todo.isCompleted) });;
       case 'TOGGLE_COMPLETION':
-        var updatedTodos = state.todos.map((item, index) => {
+        var todosToggleCompletion = state.todos.map((item, index) => {
           if (index !== action.payload.index) {
             return item;
           }
           return Object.assign({}, item, { isCompleted: !item.isCompleted });
         });
-        return Object.assign({}, state, { todos: updatedTodos });
+        return Object.assign({}, state, { todos: todosToggleCompletion });
       default:
         return state;
       }

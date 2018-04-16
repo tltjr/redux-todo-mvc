@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 import { createStore, StoreEnhancer, compose, Store, applyMiddleware } from 'redux';
 import { AppStore } from './app-store';
-import { default as reducer, AppState, logger } from './app-state';
+import { default as reducer, AppState } from './app-state';
 
 const devtools: StoreEnhancer<AppState> =
   window['devToolsExtension'] ?

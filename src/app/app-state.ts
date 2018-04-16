@@ -20,16 +20,6 @@ export interface IAppAction extends Action {
   payload: any;
 }
 
-export const logger = store => next => action => {
-  console.group(action.type);
-  console.info('dispatching', action);
-  let result = next(action);
-  console.log('next state', store.getState());
-  console.groupEnd();
-  return result;
-}
-
-
 export const initialState: AppState = {
   todos: [],
   newTodoText: ''

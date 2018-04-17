@@ -28,11 +28,19 @@ export const reducer =
         }
         let newTodo = new Todo(action.payload.newTodo);
         newTodo.id = ++maxId;
+        //traditional state mutation
         //state.todos.push(newTodo);
         //return state;
+        // a typical redux return
         return Object.assign({}, state, { todos: [...state.todos, newTodo] });
+        //const addNewTodos = [...state.todos, newTodo];
+        //const addNewState = Object.assign({}, state, { todos: addNewTodos });
+        //return addNewState;
       case 'REMOVE_TODO':
         return Object.assign({}, state, { todos: state.todos.filter(t => t !== action.payload.todo) });
+        //const removeNewTodos = state.todos.filter(t => t !== action.payload.todo);
+        //const removeNewState = Object.assign({}, state, { todos: removeNewTodos });
+        //return removeNewState;
       case 'START_EDIT':
         var todosStartEdit = state.todos.map((item, index) => {
           if (index !== action.payload.index) {

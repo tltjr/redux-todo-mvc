@@ -20,6 +20,19 @@ export interface IAppAction extends Action {
   payload: any;
 }
 
+// Function currying
+//function logger(store) {
+//  return function wrapDispatchToAddLogging(next) {
+//    return function dispatchAndLog(action) {
+//      console.log('dispatching', action)
+//      let result = next(action)
+//      console.log('next state', store.getState())
+//      return result
+//    }
+//  }
+//}
+
+// Function currying with ES6 arrow functions
 export const logger = store => next => action => {
   console.group(action.type);
   console.info('dispatching', action);
